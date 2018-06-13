@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+</head>
+<body>
+    <h4>Thanks for register account in Smart Explorer API.</h4>
+    <hr>
+    <h5>Your ID number:</h5>
+    <p th:text="${spotMakerId}"></p>
+    <hr>
+    <h5>Verification code:</h5>
+    <p th:text="${verificationCode}"></p>
+    <br>
+    <p>Make POST request to finish registration process: </p>
+    <p>/api/v1/verification</p>
+
+    <p>Request must contain JSON, formatted by this pattern:
+        <br>{
+        <br>&emsp;"spotMakerId" : "<span th:text="${spotMakerId}"></span>",
+        <br>&emsp;"verificationCode" : "<span th:text="${verificationCode}"></span>"
+        <br>}
+    </p>
+</body>
+</html>
