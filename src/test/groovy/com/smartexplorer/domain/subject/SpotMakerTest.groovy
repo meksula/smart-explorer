@@ -12,7 +12,6 @@ import spock.lang.Specification
 
 class SpotMakerTest extends Specification {
     private String spotMakerId = "dg454ec63f22"
-    private String principalNumber = "9928494849848"
     private String username = "Clerifly"
     private String password = "445rfcgv"
     private String name = "Cler"
@@ -25,7 +24,6 @@ class SpotMakerTest extends Specification {
         setup:
         def spotMaker = new SpotMaker()
         spotMaker.setSpotMakerId(spotMakerId)
-        spotMaker.setPrincipalNumber(principalNumber)
         spotMaker.setUsername(username)
         spotMaker.setPassword(password)
         spotMaker.setName(name)
@@ -34,12 +32,15 @@ class SpotMakerTest extends Specification {
         spotMaker.setAge(age)
         spotMaker.setAuthorities(auth)
 
-        when:
-        def json = new ObjectMapper().writeValueAsString(spotMaker)
-
-        then:
-        println json
-        json == "{\"spotMakerId\":\"dg454ec63f22\",\"confirmed\":false,\"principalNumber\":\"9928494849848\",\"username\":\"Clerifly\",\"password\":\"445rfcgv\",\"name\":\"Cler\",\"surname\":\"Abrevee\",\"email\":\"cl.abrevee@gmail.com\",\"age\":34,\"authorities\":[{\"authority\":\"USER\"},{\"authority\":\"SPOTMAKER\"}],\"enabled\":true,\"accountNonExpired\":true,\"accountNonLocked\":true,\"credentialsNonExpired\":true}"
+        expect:
+        spotMakerId == spotMaker.getSpotMakerId()
+        username == spotMaker.getUsername()
+        password == spotMaker.getPassword()
+        name == spotMaker.getName()
+        surname == spotMaker.getSurname()
+        email == spotMaker.getEmail()
+        age == spotMaker.getAge()
+        spotMaker.getAuthorities().size() == 2
     }
 
     def 'spotmaker builder pattern test'() {

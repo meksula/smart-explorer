@@ -43,9 +43,10 @@ public class RegistrationConfirmationImpl implements RegistrationConfirmation {
     public void confirmation(SpotMaker spotMaker) {
         String verificationCode = new DefaultUniqueDatabaseIdCreator().assignUniqueId();
         Confirmation confirmation = new Confirmation(spotMaker.getSpotMakerId(), verificationCode);
-        confirmation.setId(verificationCode);
+        confirmation.setId(spotMaker.getSpotMakerId());
 
         confirmationRepository.save(confirmation);
+
         sendConfirmationMail(confirmation, spotMaker);
     }
 

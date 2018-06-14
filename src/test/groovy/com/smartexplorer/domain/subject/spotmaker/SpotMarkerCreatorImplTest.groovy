@@ -42,10 +42,6 @@ class SpotMarkerCreatorImplTest extends Specification {
     private static String email = "karol.meksula@onet.pl"
     private static int age = 34
 
-    def setupSpec() {
-
-    }
-
     def 'spotMakerCreator should create new SpotMaker and save to database'() {
         setup:
         spotMarkerCreator = new SpotMakerCreatorImpl(repository)
@@ -60,6 +56,7 @@ class SpotMarkerCreatorImplTest extends Specification {
         def spotMaker = spotMarkerCreator.createSpotMaker(spotMakerForm)
 
         then:
+        println("spotMakerId " + spotMaker.spotMakerId)
         spotMaker.getSpotMakerId() != null
         username == spotMaker.getUsername()
         new BCryptPasswordEncoder().matches(password, spotMaker.getPassword())
@@ -68,8 +65,7 @@ class SpotMarkerCreatorImplTest extends Specification {
         email == spotMaker.getEmail()
         age == spotMaker.getAge()
 
-        Optional<Confirmation> optionalConfirmation = confirmationRepository.findByPrincipalNumber(spotMaker.getPrincipalNumber())
-        optionalConfirmation.isPresent()
+        confirmationRepository.findAll().size() == 1
 
         cleanup:
         repository.deleteAll()
