@@ -79,7 +79,7 @@ public class SpotMaker implements Serializable, MailReceiver, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return confirmed;
     }
 
     public static class SpotMakerBuilder {

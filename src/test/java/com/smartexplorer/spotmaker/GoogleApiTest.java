@@ -68,7 +68,7 @@ public class GoogleApiTest {
 
     @Test
     public void addressGeocodingTest() throws InterruptedException, ApiException, IOException {
-        GeocodingApiRequest request = GeocodingApi.geocode(geoApiContext, "Warszawa, ul. Marszałkowska 5");
+        GeocodingApiRequest request = GeocodingApi.geocode(geoApiContext, "Trzciniec 28");
         GeocodingResult[] geocodingResult = request.await().clone();
 
         for (GeocodingResult g : geocodingResult) {
@@ -78,8 +78,8 @@ public class GoogleApiTest {
             log.info(String.valueOf("Longitude: " + g.geometry.location.lng));
             log.info("Location Type: " + g.geometry.locationType.toUrlValue());
 
-            for (AddressComponent a : g.addressComponents)
-                log.info("Address component: " + a.longName);
+            for (int i = 0; i < g.addressComponents.length; i++)
+                log.info(i + ". Address component: " + g.addressComponents[i].longName);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.smartexplorer.core.domain.subject.spot;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 /**
@@ -10,5 +12,30 @@ import lombok.Getter;
 
 @Getter
 public class SpotCreationForm {
+    private String spotMakerId;
+    private String name;
+    private String description;
+    private boolean searchEnable;
+
+    private String city;
+    private String street;
+    private String buildingNumber;
+
+    @JsonCreator
+    public SpotCreationForm(@JsonProperty("spotMakerId") String spotMakerId,
+                            @JsonProperty("name") String name,
+                            @JsonProperty("description") String description,
+                            @JsonProperty("searchEnable") boolean searchEnable,
+                            @JsonProperty("city") String city,
+                            @JsonProperty("street") String street,
+                            @JsonProperty("buildingNumber") String buildingNumber) {
+        this.spotMakerId = spotMakerId;
+        this.name = name;
+        this.description = description;
+        this.searchEnable = searchEnable;
+        this.city = city;
+        this.street = street;
+        this.buildingNumber = buildingNumber;
+    }
 
 }

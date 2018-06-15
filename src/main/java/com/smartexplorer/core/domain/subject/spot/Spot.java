@@ -1,5 +1,6 @@
 package com.smartexplorer.core.domain.subject.spot;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.google.maps.model.GeocodingResult;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * */
 
 @Getter
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Document(collection = "spot")
 public class Spot {
 
@@ -23,5 +25,39 @@ public class Spot {
     private String name;
     private String description;
     private SpotStatistics spotStatistics;
-    private GeocodingResult geocodingResult;
+    private GeocodingResult[] geocodingResult;
+    private boolean searchEnable;
+
+    double longitude;
+    double latitude;
+
+    String country;
+    String zipCode;
+    String district;
+    String city;
+    String street;
+    String buildingNumber;
+
+    public Spot(String spotMakerId, String creationDate, GeocodingResult[] geocodingResult) {
+        this.spotMakerId = spotMakerId;
+        this.creationDate = creationDate;
+        this.geocodingResult = geocodingResult;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setSpotStatistics(SpotStatistics spotStatistics) {
+        this.spotStatistics = spotStatistics;
+    }
+
+    public void setSearchEnable(boolean searchEnable) {
+        this.searchEnable = searchEnable;
+    }
+
 }
