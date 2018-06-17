@@ -21,12 +21,12 @@ class SpotCreationFormTest extends Specification {
 
     def 'form creation and json deserialize test'() {
         setup:
-        def form = new SpotCreationForm(SPOT_MAKER_ID, NAME, DESCRIPTION, SEARCH_ENABLE, CITY, STREET, BUILDING_NUMBER)
+        def form = new SpotCreationForm(NAME, DESCRIPTION, SEARCH_ENABLE, CITY, STREET, BUILDING_NUMBER)
+        form.setSpotMakerId(SPOT_MAKER_ID)
 
         expect:'json deserialize'
         def json = new ObjectMapper().writeValueAsString(form)
-        json == "{\"spotMakerId\":\"33fdj4i3fdcj43dmj439d\",\"name\":\"Muzeum Wsi Lubelskiej\",\"description\":\"Placówka muzeala powstała w celu propagowania dziejów polskiej wsi.\"" +
-                ",\"searchEnable\":true,\"city\":\"Lublin\",\"street\":\"aleja warszawska\",\"buildingNumber\":\"96A\"}"
+        json == "{\"name\":\"Muzeum Wsi Lubelskiej\",\"description\":\"Placówka muzeala powstała w celu propagowania dziejów polskiej wsi.\",\"searchEnable\":true,\"city\":\"Lublin\",\"street\":\"aleja warszawska\",\"buildingNumber\":\"96A\",\"spotMakerId\":\"33fdj4i3fdcj43dmj439d\"}"
     }
 
 }

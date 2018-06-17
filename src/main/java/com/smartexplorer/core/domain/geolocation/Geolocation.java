@@ -1,6 +1,7 @@
 package com.smartexplorer.core.domain.geolocation;
 
 import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 
 /**
  * @Author
@@ -10,4 +11,6 @@ import com.google.maps.model.GeocodingResult;
 
 public interface Geolocation {
     GeocodingResult[] geolocateByAddress(BasicAddress basicAddress);
+
+    GeocodingResult[] geocodeCoordinates(LatLng coordinates);
 }

@@ -1,4 +1,4 @@
-package com.smartexplorer.domain.subject.spot
+package com.smartexplorer.core.domain.domain.subject.spot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.maps.model.GeocodingResult

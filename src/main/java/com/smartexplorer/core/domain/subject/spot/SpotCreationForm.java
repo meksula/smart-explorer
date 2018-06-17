@@ -22,14 +22,12 @@ public class SpotCreationForm {
     private String buildingNumber;
 
     @JsonCreator
-    public SpotCreationForm(@JsonProperty("spotMakerId") String spotMakerId,
-                            @JsonProperty("name") String name,
+    public SpotCreationForm(@JsonProperty("name") String name,
                             @JsonProperty("description") String description,
                             @JsonProperty("searchEnable") boolean searchEnable,
                             @JsonProperty("city") String city,
                             @JsonProperty("street") String street,
                             @JsonProperty("buildingNumber") String buildingNumber) {
-        this.spotMakerId = spotMakerId;
         this.name = name;
         this.description = description;
         this.searchEnable = searchEnable;
@@ -38,4 +36,7 @@ public class SpotCreationForm {
         this.buildingNumber = buildingNumber;
     }
 
+    public void setSpotMakerId(String spotMakerId) {
+        this.spotMakerId = spotMakerId;
+    }
 }

@@ -61,10 +61,4 @@ public class CredentialsController {
                 .isConfirmed();
     }
 
-    @GetMapping
-    public String api() {
-        return "api security test";
-    }
-
-
 }

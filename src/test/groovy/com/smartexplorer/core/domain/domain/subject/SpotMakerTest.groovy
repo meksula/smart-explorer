@@ -1,6 +1,5 @@
-package com.smartexplorer.domain.subject
+package com.smartexplorer.core.domain.domain.subject
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker
 import spock.lang.Specification
 

@@ -1,6 +1,6 @@
 package com.smartexplorer.core.controller;
 
-import com.smartexplorer.core.exception.UserCreationException;
+import com.smartexplorer.core.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +26,31 @@ public class ExceptionHandlerController {
     @ResponseStatus(HttpStatus.CONFLICT)
     public String userCreationException() {
         return new UserCreationException().getMessage();
+    }
+
+    @ExceptionHandler(SpotCreationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String spotCreationException() {
+        return new SpotCreationException().getMessage();
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String cannotUploadFile() {
+        return new FileUploadException().getMessage();
+    }
+
+    @ExceptionHandler(FileDownloadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String cannotDownloadFile() {
+        return new FileDownloadException().getMessage();
+    }
+
+
+    @ExceptionHandler(SpotLocalizeException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String cannotFindSpot() {
+        return new SpotLocalizeException().getMessage();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.smartexplorer.domain.subject.spotmaker
+package com.smartexplorer.core.domain.domain.subject.spotmaker
 
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMakerForm
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMakerValidator

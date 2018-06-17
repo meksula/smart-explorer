@@ -1,4 +1,4 @@
-package com.smartexplorer.domain.mail
+package com.smartexplorer.core.domain.domain.mail
 
 import com.smartexplorer.core.SmarteplorerSpotmakerApplication
 import com.smartexplorer.core.domain.mail.MailReceiver

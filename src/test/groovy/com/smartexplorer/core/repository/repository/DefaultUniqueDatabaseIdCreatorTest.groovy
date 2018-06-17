@@ -1,4 +1,4 @@
-package com.smartexplorer.repository
+package com.smartexplorer.core.repository.repository
 
 import com.smartexplorer.core.repository.id.DefaultUniqueDatabaseIdCreator
 import spock.lang.Specification

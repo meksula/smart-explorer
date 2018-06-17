@@ -18,10 +18,15 @@ public abstract class SpotCreator {
             throw new SpotCreationException("Form is not valid.");
 
         GeocodingResult[] geocodigResults = geolocation(spotCreationForm);
-        Spot spot = buildSpot(spotCreationForm, geocodigResults);
-        saveSpot(spot);
 
-        return spot;
+        try {
+            Spot spot = buildSpot(spotCreationForm, geocodigResults);
+            saveSpot(spot);
+            return spot;
+        } catch (RuntimeException re) {
+            throw new SpotCreationException("Some values are 'null' or invalid.");
+        }
+
     }
 
     protected abstract boolean validateForm(SpotCreationForm spotCreationForm);
