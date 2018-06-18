@@ -1,6 +1,9 @@
 package com.smartexplorer.core.domain.subject.spot.stats;
 
 import com.smartexplorer.core.domain.subject.spot.Spot;
+import com.smartexplorer.core.domain.subject.spot.opinion.Opinion;
+
+import java.util.List;
 
 /**
  * @Author
@@ -11,14 +14,10 @@ import com.smartexplorer.core.domain.subject.spot.Spot;
 public interface StatisticsCounter {
     void visitNumberIncrement(Spot spot);
 
-    void ratesNumberIncrement(Spot spot);
-
     void searchesIncrement(Spot spot);
 
-    void ratesTotalSum(Spot spot);
+    void searchesIncrement(List<Spot> spotList);
 
-    void ratesNumber(Spot spot);
-
-    void ratesAvgCompute(Spot spot);
+    void opinionStatsUpdate(Opinion opinion);
 
 }

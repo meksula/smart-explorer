@@ -1,6 +1,8 @@
 package com.smartexplorer.core.domain.subject.spot.opinion;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
@@ -13,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * */
 
 @Getter
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Document(collection = "opinions")
 public class Opinion {
 
@@ -26,7 +27,11 @@ public class Opinion {
     private String content;
     private String date;
 
-    public Opinion(String explorerId, String spotId, double rate, String content) {
+    @JsonCreator
+    public Opinion(@JsonProperty("explorerId") String explorerId,
+                   @JsonProperty("spotId") String spotId,
+                   @JsonProperty("rate") double rate,
+                   @JsonProperty("content") String content) {
         this.explorerId = explorerId;
         this.spotId = spotId;
         this.rate = rate;

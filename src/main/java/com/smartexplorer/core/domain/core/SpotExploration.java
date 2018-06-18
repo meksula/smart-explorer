@@ -1,6 +1,7 @@
 package com.smartexplorer.core.domain.core;
 
 import com.google.maps.model.LatLng;
+import com.smartexplorer.core.domain.subject.explorers.Visit;
 import com.smartexplorer.core.domain.subject.spot.Spot;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface SpotExploration {
 
     List<Spot> findTopSpotsInCountry(int amount);
 
+    Spot visitPlace(Visit visit);
+
+    List<Visit> findVisitHistory(String explorerId);
 }

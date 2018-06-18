@@ -72,6 +72,12 @@ class SpotExplorationImplTest extends Specification {
         spotExploration.findSpotsInDistrict(latLng).size() == 2
     }
 
+    def 'findTopSpotsInCountry'() {
+
+    }
+
+
+
     def cleanup() {
         spotRepository.deleteAll()
     }

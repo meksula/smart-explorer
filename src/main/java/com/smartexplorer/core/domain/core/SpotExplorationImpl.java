@@ -3,9 +3,12 @@ package com.smartexplorer.core.domain.core;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.smartexplorer.core.domain.geolocation.Geolocation;
+import com.smartexplorer.core.domain.subject.explorers.Visit;
 import com.smartexplorer.core.domain.subject.spot.Spot;
 import com.smartexplorer.core.domain.subject.spot.stats.StatisticsProvider;
+import com.smartexplorer.core.exception.SpotLocalizeException;
 import com.smartexplorer.core.repository.SpotRepository;
+import com.smartexplorer.core.repository.VisitHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,7 @@ public class SpotExplorationImpl implements SpotExploration {
     private SpotRepository spotRepository;
     private Geolocation geolocation;
     private StatisticsProvider statisticsProvider;
+    private VisitHistoryRepository visitHistoryRepository;
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -37,6 +41,11 @@ public class SpotExplorationImpl implements SpotExploration {
     @Autowired
     public void setStatisticsProvider(StatisticsProvider statisticsProvider) {
         this.statisticsProvider = statisticsProvider;
+    }
+
+    @Autowired
+    public void setVisitHistoryRepository(VisitHistoryRepository visitHistoryRepository) {
+        this.visitHistoryRepository = visitHistoryRepository;
     }
 
     @Override
@@ -85,6 +94,20 @@ public class SpotExplorationImpl implements SpotExploration {
     @Override
     public List<Spot> findTopSpotsInCountry(int amount) {
         return statisticsProvider.findMostVisited(amount);
+    }
+
+    @Override
+    public Spot visitPlace(Visit visit) {
+        visit.initDate();
+        visitHistoryRepository.save(visit);
+
+        return spotRepository.findById(visit.getSpotId())
+                .orElseThrow(() -> new SpotLocalizeException("There is no spot with id: " + visit.getSpotId()));
+    }
+
+    @Override
+    public List<Visit> findVisitHistory(String explorerId) {
+        return visitHistoryRepository.findAllByExplorerId(explorerId);
     }
 
 }

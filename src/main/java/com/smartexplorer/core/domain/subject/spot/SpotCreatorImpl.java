@@ -45,6 +45,11 @@ public class SpotCreatorImpl extends SpotCreator {
     }
 
     @Autowired
+    public void setSpotMakerRepository(SpotMakerRepository spotMakerRepository) {
+        this.spotMakerRepository = spotMakerRepository;
+    }
+
+    @Autowired
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
     }

@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface SpotOpinionsRepository extends MongoRepository<Opinion, String> {
     List<Opinion> findAllBySpotId(String spotId);
+
+    List<Opinion> findAllByExplorerId(String explorerId);
 }
