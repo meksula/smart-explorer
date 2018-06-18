@@ -2,6 +2,7 @@ package com.smartexplorer.core.domain.subject.spot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.smartexplorer.core.repository.SpotRepository
+import com.smartexplorer.core.repository.SpotStatisticsRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
@@ -29,10 +30,13 @@ class SpotCreatorImplTest extends Specification {
     private SpotRepository spotRepository
 
     @Autowired
+    private SpotStatisticsRepository spotStatisticsRepository
+
+    @Autowired
     private SpotCreator spotCreator
 
     void setup() {
-        form = new SpotCreationForm(SPOT_MAKER_ID, NAME, DESCRIPTION, SEARCH_ENABLE, CITY, STREET, BUILDING_NUMBER)
+        form = new SpotCreationForm(NAME, DESCRIPTION, SEARCH_ENABLE, CITY, STREET, BUILDING_NUMBER)
     }
 
     def 'instantiate test'() {
@@ -47,11 +51,9 @@ class SpotCreatorImplTest extends Specification {
 
         then:
         spot != null
-        spot.getSpotMakerId() == SPOT_MAKER_ID
         spot.getCreationDate() != null
         spot.getName() == NAME
         spot.getDescription() == DESCRIPTION
-        spot.getSpotStatistics() != null
         spot.getGeocodingResult().length != 0
         spot.isSearchEnable()
 
@@ -64,10 +66,13 @@ class SpotCreatorImplTest extends Specification {
         !spot.street.isEmpty()
         !spot.buildingNumber.isEmpty()
 
+        spotStatisticsRepository.findBySpotId(spot.id).isPresent()
+
         println(new ObjectMapper().writeValueAsString(spot))
     }
 
     void cleanup() {
         spotRepository.deleteAll()
+        spotStatisticsRepository.deleteAll()
     }
 }

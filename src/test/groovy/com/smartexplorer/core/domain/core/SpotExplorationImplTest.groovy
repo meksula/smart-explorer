@@ -42,6 +42,7 @@ class SpotExplorationImplTest extends Specification {
 
         spot = new Spot("", "", new GeocodingResult[6])
         spot.city = "Warszawa"
+        spot.district = "Warszawa"
         spotRepository.save(spot)
     }
 
@@ -59,6 +60,16 @@ class SpotExplorationImplTest extends Specification {
 
         then:
         result != null
+    }
+
+    def 'findSpotInDistrict test'() {
+        setup: 'save extra spot'
+        def spot2 = new Spot("", "", new GeocodingResult[6])
+        spot2.district = "Warszawa"
+        spotRepository.save(spot2)
+
+        expect:
+        spotExploration.findSpotsInDistrict(latLng).size() == 2
     }
 
     def cleanup() {

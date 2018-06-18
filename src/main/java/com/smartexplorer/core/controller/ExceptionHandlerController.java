@@ -53,4 +53,10 @@ public class ExceptionHandlerController {
         return new SpotLocalizeException().getMessage();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String illegalArgument() {
+        return "Something went wrong. Argument is invalid.";
+    }
+
 }

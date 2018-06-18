@@ -1,6 +1,7 @@
 package com.smartexplorer.core.domain.mail;
 
 import com.smartexplorer.core.domain.subject.registration.Confirmation;
+import com.smartexplorer.core.domain.subject.spot.Spot;
 import org.thymeleaf.context.Context;
 
 /**
@@ -43,6 +44,31 @@ public enum MailType {
         }
 
         String template = "/mail/register_confirm.html";
+    },
+
+    SPOT_CREATION_CONFIRM {
+        @Override
+        public Context setContext(Object attachment) {
+            Spot spot = (Spot) attachment;
+
+            Context context = new Context();
+            context.setVariable("latitude", spot.getLatitude());
+            context.setVariable("longitude", spot.getLongitude());
+            context.setVariable("buildingNumber", spot.getBuildingNumber());
+            context.setVariable("street", spot.getStreet());
+            context.setVariable("city", spot.getCity());
+            context.setVariable("district", spot.getDistrict());
+            context.setVariable("zipCode", spot.getZipCode());
+            context.setVariable("country", spot.getCountry());
+
+
+            return context;
+        }
+
+        @Override
+        public String getTemplate() {
+            return "/mail/spot_creation_confirm.html";
+        }
     };
 
     public abstract Context setContext(Object attachment);

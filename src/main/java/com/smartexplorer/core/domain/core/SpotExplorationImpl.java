@@ -4,6 +4,7 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.smartexplorer.core.domain.geolocation.Geolocation;
 import com.smartexplorer.core.domain.subject.spot.Spot;
+import com.smartexplorer.core.domain.subject.spot.stats.StatisticsProvider;
 import com.smartexplorer.core.repository.SpotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class SpotExplorationImpl implements SpotExploration {
     private SpotRepository spotRepository;
     private Geolocation geolocation;
+    private StatisticsProvider statisticsProvider;
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -30,6 +32,11 @@ public class SpotExplorationImpl implements SpotExploration {
     @Autowired
     public void setGeolocation(Geolocation geolocation) {
         this.geolocation = geolocation;
+    }
+
+    @Autowired
+    public void setStatisticsProvider(StatisticsProvider statisticsProvider) {
+        this.statisticsProvider = statisticsProvider;
     }
 
     @Override
@@ -61,13 +68,23 @@ public class SpotExplorationImpl implements SpotExploration {
 
     @Override
     public List<Spot> findSpotsInDistrict(LatLng coordinates) {
-        //TODO
-        return null;
+        GeocodingResult geocodingResult = geolocation.geocodeCoordinates(coordinates)[0];
+        String district;
+
+        if (geocodingResult.addressComponents.length == 8)
+            district = geocodingResult.addressComponents[3].longName;
+
+        else if (geocodingResult.addressComponents.length == 7)
+            district = geocodingResult.addressComponents[2].longName;
+
+        else district = geocodingResult.addressComponents[2].longName;
+
+        return spotRepository.findByDistrict(district);
     }
 
     @Override
     public List<Spot> findTopSpotsInCountry(int amount) {
-        //TODO
-        return null;
+        return statisticsProvider.findMostVisited(amount);
     }
+
 }

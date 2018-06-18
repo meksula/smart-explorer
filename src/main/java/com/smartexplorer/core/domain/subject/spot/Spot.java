@@ -24,7 +24,6 @@ public class Spot {
     private String creationDate;
     private String name;
     private String description;
-    private SpotStatistics spotStatistics;
     private GeocodingResult[] geocodingResult;
     private boolean searchEnable;
 
@@ -50,10 +49,6 @@ public class Spot {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setSpotStatistics(SpotStatistics spotStatistics) {
-        this.spotStatistics = spotStatistics;
     }
 
     public void setSearchEnable(boolean searchEnable) {

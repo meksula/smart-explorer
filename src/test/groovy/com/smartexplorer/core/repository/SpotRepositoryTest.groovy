@@ -2,7 +2,7 @@ package com.smartexplorer.core.repository
 
 import com.google.maps.model.GeocodingResult
 import com.smartexplorer.core.domain.subject.spot.Spot
-import com.smartexplorer.core.domain.subject.spot.SpotStatistics
+import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics
 import org.joda.time.LocalDateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

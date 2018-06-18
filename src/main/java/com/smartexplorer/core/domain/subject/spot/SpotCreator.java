@@ -22,6 +22,8 @@ public abstract class SpotCreator {
         try {
             Spot spot = buildSpot(spotCreationForm, geocodigResults);
             saveSpot(spot);
+            createStatsEntity(spot.getId());
+            sendEmail(spot);
             return spot;
         } catch (RuntimeException re) {
             throw new SpotCreationException("Some values are 'null' or invalid.");
@@ -36,5 +38,9 @@ public abstract class SpotCreator {
     protected abstract Spot buildSpot(SpotCreationForm spotCreationForm, GeocodingResult[] geocodigResults);
 
     protected abstract void saveSpot(Spot spot);
+
+    protected abstract void createStatsEntity(String spotId);
+
+    protected abstract void sendEmail(Spot spot);
 
 }

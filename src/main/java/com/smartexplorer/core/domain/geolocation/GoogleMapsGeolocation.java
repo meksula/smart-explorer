@@ -38,6 +38,7 @@ public class GoogleMapsGeolocation implements Geolocation {
         try {
             return request.await().clone();
         } catch (ApiException | InterruptedException | IOException e) {
+            e.getStackTrace();
             throw new LocalizationException("Something went wrong. Cannot localize: " + basicAddress.toString());
         }
 

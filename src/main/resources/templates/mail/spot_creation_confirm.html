@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+</head>
+<body>
+    <h3>Spot was created successfully.</h3>
+        <hr>
+            <p>Now, by default spot is enable to search. You can change this by update entity of spot.</p>
+        <hr>
+    <h4>Spot's Location data:</h4>
+    <table>
+        <tr>
+            <td>latitude:</td>
+            <td><span th:text="${latitude}"></span></td>
+        </tr>
+        <tr>
+            <td>longitude:</td>
+            <td><span th:text="${longitude}"></span></td>
+        </tr>
+        <tr>
+            <td>buildingNumber</td>
+            <td><span th:text="${buildingNumber}"></span></td>
+        </tr>
+        <tr>
+            <td>street</td>
+            <td><span th:text="${street}"></span></td>
+        </tr>
+        <tr>
+            <td>city</td>
+            <td><span th:text="${city}"></span></td>
+        </tr>
+        <tr>
+            <td>district</td>
+            <td><span th:text="${district}"></span></td>
+        </tr>
+        <tr>
+            <td>zipCode</td>
+            <td><span th:text="${zipCode}"></span></td>
+        </tr>
+        <tr>
+            <td>country</td>
+            <td><span th:text="${country}"></span></td>
+        </tr>
+    </table>
+</body>
+</html>

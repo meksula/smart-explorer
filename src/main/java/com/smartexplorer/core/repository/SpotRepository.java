@@ -16,4 +16,6 @@ public interface SpotRepository extends MongoRepository<Spot, String> {
     Optional<Spot> findByName(String name);
 
     List<Spot> findByCity(String city);
+
+    List<Spot> findByDistrict(String district);
 }

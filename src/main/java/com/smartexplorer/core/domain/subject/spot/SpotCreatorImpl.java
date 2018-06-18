@@ -3,7 +3,14 @@ package com.smartexplorer.core.domain.subject.spot;
 import com.google.maps.model.GeocodingResult;
 import com.smartexplorer.core.domain.geolocation.BasicAddress;
 import com.smartexplorer.core.domain.geolocation.Geolocation;
+import com.smartexplorer.core.domain.mail.MailSender;
+import com.smartexplorer.core.domain.mail.MailType;
+import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics;
+import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
+import com.smartexplorer.core.exception.SpotCreationException;
+import com.smartexplorer.core.repository.SpotMakerRepository;
 import com.smartexplorer.core.repository.SpotRepository;
+import com.smartexplorer.core.repository.SpotStatisticsRepository;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +24,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpotCreatorImpl extends SpotCreator {
     private SpotRepository spotRepository;
+    private SpotStatisticsRepository spotStatisticsRepository;
     private Geolocation geolocation;
+    private MailSender mailSender;
+    private SpotMakerRepository spotMakerRepository;
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -27,6 +37,16 @@ public class SpotCreatorImpl extends SpotCreator {
     @Autowired
     public void setGeolocation(Geolocation geolocation) {
         this.geolocation = geolocation;
+    }
+
+    @Autowired
+    public void setSpotStatisticsRepository(SpotStatisticsRepository spotStatisticsRepository) {
+        this.spotStatisticsRepository = spotStatisticsRepository;
+    }
+
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -53,7 +73,6 @@ public class SpotCreatorImpl extends SpotCreator {
         spot.setName(spotCreationForm.getName());
         spot.setDescription(spotCreationForm.getDescription());
         spot.setSearchEnable(spotCreationForm.isSearchEnable());
-        spot.setSpotStatistics(new SpotStatistics());
 
         GeocodingResult result = geocodigResults[0];
 
@@ -92,4 +111,20 @@ public class SpotCreatorImpl extends SpotCreator {
     protected void saveSpot(Spot spot) {
         spotRepository.save(spot);
     }
+
+    @Override
+    protected void createStatsEntity(String spotId) {
+        SpotStatistics spotStatistics = new SpotStatistics(spotId);
+        spotStatisticsRepository.save(spotStatistics);
+    }
+
+    @Override
+    protected void sendEmail(Spot spot) {
+        SpotMaker spotMaker = spotMakerRepository.findById(spot.getSpotMakerId())
+                .orElseThrow(() -> new SpotCreationException("Cannot retrieve email from SpotMaker!"));
+
+        mailSender.setAttachment(spot);
+        mailSender.sendMail(MailType.SPOT_CREATION_CONFIRM, spotMaker);
+    }
+
 }
