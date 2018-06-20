@@ -27,6 +27,7 @@ public class SpotExplorationImpl implements SpotExploration {
     private Geolocation geolocation;
     private StatisticsProvider statisticsProvider;
     private VisitHistoryRepository visitHistoryRepository;
+    private NearestSpot nearestSpot;
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -48,10 +49,15 @@ public class SpotExplorationImpl implements SpotExploration {
         this.visitHistoryRepository = visitHistoryRepository;
     }
 
+    @Autowired
+    public void setNearestSpot(NearestSpot nearestSpot) {
+        this.nearestSpot = nearestSpot;
+    }
+
     @Override
     public Optional<Spot> findNearestSpot(LatLng coordinates) {
-        //TODO
-        return Optional.empty();
+        GeocodingResult geocodingResult = geolocation.geocodeCoordinates(coordinates)[0];
+        return Optional.ofNullable(nearestSpot.findNearestSpot(geocodingResult));
     }
 
     @Override
@@ -62,7 +68,7 @@ public class SpotExplorationImpl implements SpotExploration {
     @Override
     public List<Spot> findSpotsInCity(LatLng coordinates) {
         GeocodingResult geocodingResult = geolocation.geocodeCoordinates(coordinates)[0];
-        String city;
+        final String city;
 
         if (geocodingResult.addressComponents.length == 8)
             city = geocodingResult.addressComponents[4].longName;
