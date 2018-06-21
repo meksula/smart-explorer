@@ -23,6 +23,7 @@ class AddressDeserializerTest extends Specification {
         geolocation = new GoogleMapsGeolocation()
     }
 
+
     def 'village deserialize test'() {
         setup:
         def result = geolocation.geolocateByAddress(village)[0]

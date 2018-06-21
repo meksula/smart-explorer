@@ -1,6 +1,7 @@
 package com.smartexplorer.core.domain.core;
 
 import com.google.maps.model.AddressComponent;
+import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.GeocodingResult;
 
 import java.util.LinkedHashMap;
@@ -25,6 +26,15 @@ public enum AddressDeserializer {
             deserialized.put("voivodeship", components[3].longName);
             deserialized.put("country", components[4].longName);
             deserialized.put("zipCode", components[5].longName);
+
+            int c = 0;
+            for (AddressComponent component : components) {
+                System.out.println(c + ": " + component.longName);
+                for (AddressComponentType type : component.types){
+                    System.out.println(type.toCanonicalLiteral());
+                }
+                c++;
+            }
 
             return deserialized;
         }
