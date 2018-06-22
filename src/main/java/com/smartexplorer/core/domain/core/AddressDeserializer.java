@@ -27,15 +27,6 @@ public enum AddressDeserializer {
             deserialized.put("country", components[4].longName);
             deserialized.put("zipCode", components[5].longName);
 
-            int c = 0;
-            for (AddressComponent component : components) {
-                System.out.println(c + ": " + component.longName);
-                for (AddressComponentType type : component.types){
-                    System.out.println(type.toCanonicalLiteral());
-                }
-                c++;
-            }
-
             return deserialized;
         }
     }, TOWN {

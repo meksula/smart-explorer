@@ -8,6 +8,7 @@ import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
 import com.smartexplorer.core.repository.SpotMakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class SpotController {
         this.fileExchange = fileExchange;
     }
 
+    @PreAuthorize("hasAuthority('SPOT_MAKER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Spot createSpot(@RequestBody SpotCreationForm spotCreationForm, Authentication authentication) {
@@ -52,6 +54,7 @@ public class SpotController {
         return spotCreator.createSpot(spotCreationForm);
     }
 
+    @PreAuthorize("hasAuthority('SPOT_MAKER')")
     @PostMapping(value = "/{spotId}")
     @ResponseStatus(HttpStatus.CREATED)
     public String sendPhoto(@PathVariable("spotId") String spotId, @RequestParam("file") MultipartFile file) {

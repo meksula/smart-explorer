@@ -4,6 +4,7 @@ import com.smartexplorer.core.domain.subject.explorers.Explorer;
 import com.smartexplorer.core.repository.ExplorerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -24,6 +25,7 @@ public class ExplorerPersonalizationController {
         this.explorerRepository = explorerRepository;
     }
 
+    @PreAuthorize("hasAuthority('PROXY')")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Explorer updateExplorer(@RequestBody Explorer explorer) {

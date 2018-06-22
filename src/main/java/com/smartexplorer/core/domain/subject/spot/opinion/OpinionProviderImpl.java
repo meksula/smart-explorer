@@ -44,7 +44,7 @@ public class OpinionProviderImpl implements OpinionsProvider {
     @Override
     public List<Opinion> getWorstOpinions(String spotId, int amount) {
         List<Opinion> opinionList = spotOpinionsRepository.findAllBySpotId(spotId);
-        opinionList.sort(Comparator.comparing(Opinion::getRate).reversed());
+        opinionList.sort(Comparator.comparing(Opinion::getRate));
         try {
             return opinionList.subList(0, amount);
         } catch (IndexOutOfBoundsException e) {

@@ -12,7 +12,9 @@ import com.smartexplorer.core.repository.VisitHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -28,6 +30,11 @@ public class SpotExplorationImpl implements SpotExploration {
     private StatisticsProvider statisticsProvider;
     private VisitHistoryRepository visitHistoryRepository;
     private NearestSpot nearestSpot;
+    private AddressComponentMapper addressComponentMapper;
+
+    public SpotExplorationImpl() {
+        this.addressComponentMapper = new DefaultAddressComponentMapper();
+    }
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -68,33 +75,15 @@ public class SpotExplorationImpl implements SpotExploration {
     @Override
     public List<Spot> findSpotsInCity(LatLng coordinates) {
         GeocodingResult geocodingResult = geolocation.geocodeCoordinates(coordinates)[0];
-        final String city;
 
-        if (geocodingResult.addressComponents.length == 8)
-            city = geocodingResult.addressComponents[4].longName;
-
-        else if (geocodingResult.addressComponents.length == 7)
-            city = geocodingResult.addressComponents[3].longName;
-
-        else city = geocodingResult.addressComponents[1].longName;
-
-        return spotRepository.findByCity(city);
+        return spotRepository.findByCity(addressComponentMapper.mapLocality(geocodingResult));
     }
 
     @Override
     public List<Spot> findSpotsInDistrict(LatLng coordinates) {
         GeocodingResult geocodingResult = geolocation.geocodeCoordinates(coordinates)[0];
-        String district;
 
-        if (geocodingResult.addressComponents.length == 8)
-            district = geocodingResult.addressComponents[3].longName;
-
-        else if (geocodingResult.addressComponents.length == 7)
-            district = geocodingResult.addressComponents[2].longName;
-
-        else district = geocodingResult.addressComponents[2].longName;
-
-        return spotRepository.findByDistrict(district);
+        return spotRepository.findByDistrict(addressComponentMapper.mapDistrict(geocodingResult));
     }
 
     @Override

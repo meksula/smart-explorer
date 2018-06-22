@@ -43,7 +43,7 @@ public enum MailType {
             return template;
         }
 
-        String template = "/mail/register_confirm.html";
+        String template = "register_confirm.html";
     },
 
     SPOT_CREATION_CONFIRM {
@@ -61,13 +61,12 @@ public enum MailType {
             context.setVariable("zipCode", spot.getZipCode());
             context.setVariable("country", spot.getCountry());
 
-
             return context;
         }
 
         @Override
         public String getTemplate() {
-            return "/mail/spot_creation_confirm.html";
+            return "spot_creation_confirm.html";
         }
     };
 

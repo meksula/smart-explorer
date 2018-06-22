@@ -8,6 +8,7 @@ import com.smartexplorer.core.domain.subject.spot.stats.OpinionStat;
 import com.smartexplorer.core.repository.SpotOpinionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class SpotOpinionsController {
         this.opinionsProvider = opinionsProvider;
     }
 
+    @PreAuthorize("hasAuthority('PROXY')")
     @OpinionStat
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -78,6 +80,7 @@ public class SpotOpinionsController {
         return opinionsProvider.getExplorersOpinions(explorerId);
     }
 
+    @PreAuthorize("hasAuthority('PROXY')")
     @GetMapping("/all/{spotId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Opinion> getAllOpinions(@PathVariable("spotId") String spotId) {

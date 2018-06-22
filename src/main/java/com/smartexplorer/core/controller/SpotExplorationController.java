@@ -8,6 +8,7 @@ import com.smartexplorer.core.domain.subject.spot.stats.SpotSearch;
 import com.smartexplorer.core.exception.SpotLocalizeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,6 +75,7 @@ public class SpotExplorationController {
                 .orElseThrow(() -> new SpotLocalizeException("There is no spot with id: " + spotId));
     }
 
+    @PreAuthorize("hasAuthority('PROXY')")
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public Spot markAsVisited(@RequestBody Visit visit) {
