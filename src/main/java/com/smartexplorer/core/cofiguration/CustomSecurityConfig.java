@@ -44,7 +44,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/doc/**", "/api/v1/registration", "/api/v1/verification", "/logout").permitAll()
+                .antMatchers("/", "/api/v1/registration", "/api/v1/verification", "/logout").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -57,7 +57,5 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
     }
-
-
 
 }

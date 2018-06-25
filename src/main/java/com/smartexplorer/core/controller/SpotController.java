@@ -8,6 +8,7 @@ import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
 import com.smartexplorer.core.repository.SpotMakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,7 +62,7 @@ public class SpotController {
         return fileExchange.uploadPicture(file, spotId);
     }
 
-    @GetMapping(value = "/{spotId}")
+    @GetMapping(value = "/{spotId}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public byte[] getPhoto(@PathVariable("spotId") String spotId) {
         return fileExchange.getPicture(spotId);

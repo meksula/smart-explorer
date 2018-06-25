@@ -6,6 +6,7 @@ import com.smartexplorer.core.domain.subject.explorers.Visit;
 import com.smartexplorer.core.domain.subject.spot.Spot;
 import com.smartexplorer.core.domain.subject.spot.stats.SpotSearch;
 import com.smartexplorer.core.exception.SpotLocalizeException;
+import com.smartexplorer.core.repository.SpotStatisticsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,10 +24,16 @@ import java.util.List;
 @RequestMapping("/api/v1/spot/exploration")
 public class SpotExplorationController {
     private SpotExploration spotExploration;
+    private SpotStatisticsRepository spotStatisticsRepository;
 
     @Autowired
     public void setSpotExploration(SpotExploration spotExploration) {
         this.spotExploration = spotExploration;
+    }
+
+    @Autowired
+    public void setSpotStatisticsRepository(SpotStatisticsRepository spotStatisticsRepository) {
+        this.spotStatisticsRepository = spotStatisticsRepository;
     }
 
     @SpotSearch
@@ -54,7 +61,7 @@ public class SpotExplorationController {
         return checkIfEmpty(spotList, "There is no spots in your district.");
     }
 
-    @PostMapping("/top/{amount}")
+    @GetMapping("/top/{amount}")
     @ResponseStatus(HttpStatus.OK)
     public List<Spot> getTopSpots(@PathVariable("amount") int amount) {
         List<Spot> spotList = spotExploration.findTopSpotsInCountry(amount);
@@ -86,6 +93,19 @@ public class SpotExplorationController {
     @ResponseStatus(HttpStatus.OK)
     public List<Visit> getExplorersHistory(@PathVariable("explorerId") String explorerId) {
         return spotExploration.findVisitHistory(explorerId);
+    }
+
+    @GetMapping("/{spotId}/rate")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAverageRate(@PathVariable("spotId") String spotId) {
+        double avg = spotStatisticsRepository.findBySpotId(spotId)
+                .orElseThrow(() -> new SpotLocalizeException("Cannot load statistics for Spot: " + spotId))
+                .getRatesAvg();
+
+        if (Double.isNaN(avg))
+            return 0;
+
+        return avg;
     }
 
 }

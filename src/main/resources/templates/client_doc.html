@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client documentation</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doc.css}">
+</head>
+<body>
+
+<h2>Computer alchemist v 1.0 API Documentation</h2>
+<hr>
+
+<button><a th:href="@{/doc/basic}">Basic documentation</a></button>
+<button><a th:href="@{/doc/types}">Complete list of all parameters</a></button>
+<button><a th:href="@{/doc}">Components documentation</a></button>
+<button><a th:href="@{/doc/builder}">Alchemist builder documentation</a></button>
+<button><a th:href="@{/doc/pickpocket}">Pickpocket documentation</a></button>
+<button><a th:href="@{/doc/registration}">Registration & Login</a></button>
+
+<hr>
+
+<table>
+    <tr>
+        <th>HTTP Method</th>
+        <th>URI Address</th>
+        <th>Parameters</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/components/{component}/{id}</td>
+        <td>
+            <li>@param `component` define type of Computer Component.</li>
+            <hr>
+            <li>@param `id` define ID number of Component in database.</li>
+        </td>
+        <td>
+            <p>
+                You can fetch the JSON data of the component you are interested in.
+                <br>Obtained JSON contains HAL links to other available actions associated with component.
+            <hr><br>Example: /components/motherboard/4225
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/components/{component}</td>
+        <td>
+            <li>@param `component` define type of Computer Component.</li>
+        </td>
+        <td>
+            <p>
+                You can fetch list of Components.
+                <br>Obtained JSON contains HAL links to other available actions associated with component.
+            <hr><br>Example: /components/motherboard
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td>/components/{component}/{id}</td>
+        <td>
+            <li>@param `component` define type of Computer Component.</li>
+            <hr>
+            <li>@param `id` define ID number of Component in database.</li>
+        </td>
+        <td>
+            <p>
+                You can remove Component from database if you have relevant credential (ADMIN).
+                <br>Obtained HttpStatus inform you what action has done.
+            <hr><br>Example: /components/motherboard/4225
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/components/{component}/{id}/opinions</td>
+        <td>
+            <li>@param `component` define type of Computer Component.</li>
+            <hr>
+            <li>@param `id` define ID number of Component in database.</li>
+        </td>
+        <td>
+            <p>
+                Each user can add opinion to product.
+                <br>Obtained JSON contains HAL links to other available actions associated with component.
+            <hr><br>Example: /components/motherboard/4225/opinions
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/components/{component}/{id}/opinions</td>
+        <td>
+            <li>@param `component` define type of Computer Component.</li>
+            <hr>
+            <li>@param `id` define ID number of Component in database.</li>
+        </td>
+        <td>
+            <p>
+                You can get opinions about the product.
+                <br>Obtained JSON contains HAL links to other available actions associated with component.
+            <hr><br>Example: /components/motherboard/4225/opinions
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/components</td>
+        <td>
+
+        </td>
+        <td>
+            <p>
+                At this address you can post Component in correctly JSON format. Notice that @param `componentType`
+                <br>is most important at that because based on it Alchemist decides where to persist document.
+            <hr><br>Example: /components
+            <hr><h6>Basic JSON Component example:</h6>
+            <p>
+                {"producent":"AMD",
+                <br>"model":"Ryzen 5 1600",
+                <br>"description":"Description text...",
+                <br>"compatibleIndex":7.0,
+                <br>"componentType":"cpu",
+                <br>"cpuParameters":
+                <br>{"cores":6,
+                <br>"series":"Ryzen 5",
+                <br>"socket":"AM4",
+                <br>"threads":12,
+                <br>"bitArchitecture":"64bit",
+                <br>"cache":16,
+                <br>"frequency":3.2}}
+            </p>
+
+            </p>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

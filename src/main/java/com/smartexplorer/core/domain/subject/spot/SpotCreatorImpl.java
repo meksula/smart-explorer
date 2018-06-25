@@ -81,8 +81,6 @@ public class SpotCreatorImpl extends SpotCreator {
 
         GeocodingResult result = geocodigResults[0];
 
-        System.out.println("Result founded: " + geocodigResults.length);
-
         spot.longitude = result.geometry.location.lng;
         spot.latitude = result.geometry.location.lat;
 

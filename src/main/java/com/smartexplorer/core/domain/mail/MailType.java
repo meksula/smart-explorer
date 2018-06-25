@@ -1,5 +1,6 @@
 package com.smartexplorer.core.domain.mail;
 
+import com.smartexplorer.core.domain.subject.explorers.Explorer;
 import com.smartexplorer.core.domain.subject.registration.Confirmation;
 import com.smartexplorer.core.domain.subject.spot.Spot;
 import org.thymeleaf.context.Context;
@@ -67,6 +68,24 @@ public enum MailType {
         @Override
         public String getTemplate() {
             return "spot_creation_confirm.html";
+        }
+    },
+
+    EXPLORER_JOINED {
+        @Override
+        public Context setContext(Object attachment) {
+            Explorer explorer = (Explorer) attachment;
+
+            Context context = new Context();
+            context.setVariable("explorerId", explorer.getExplorerId());
+            context.setVariable("username", explorer.getNickname());
+
+            return context;
+        }
+
+        @Override
+        public String getTemplate() {
+            return "explorer_joined.html";
         }
     };
 

@@ -48,9 +48,7 @@ public class SpotOpinionsController {
         if (opinionValidator.validateOpinion(opinion)) {
             opinion.initDate();
             return spotOpinionsRepository.save(opinion);
-        }
-
-        else throw new IllegalArgumentException();
+        } else throw new IllegalArgumentException();
     }
 
     @GetMapping("/latest/{spotId}/{amount}")

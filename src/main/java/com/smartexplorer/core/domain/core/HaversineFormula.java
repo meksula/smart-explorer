@@ -18,7 +18,7 @@ public class HaversineFormula implements Haversine {
         double latidutePointB = pointB.lat;
         double longitudePointB = pointB.lng;
 
-        double latitudeDelta  = Math.toRadians((latidutePointB - latitudePointA));
+        double latitudeDelta = Math.toRadians((latidutePointB - latitudePointA));
         double longitudeDelta = Math.toRadians((longitudePointB - longitudePointA));
 
         latitudePointA = Math.toRadians(latitudePointA);

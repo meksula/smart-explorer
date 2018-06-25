@@ -74,7 +74,9 @@ public class StatisticsCounterImpl implements StatisticsCounter {
 
         spotStatistics.setRatesNumber(ratesNumber + 1);
         spotStatistics.setRatesTotal(ratesTotal + opinion.getRate());
-        spotStatistics.setRatesAvg(ratesTotal / ratesNumber);
+
+        double avg = spotStatistics.getRatesTotal() / spotStatistics.getRatesNumber();
+        spotStatistics.setRatesAvg(avg);
 
         spotStatisticsRepository.save(spotStatistics);
     }

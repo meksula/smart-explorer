@@ -1,7 +1,6 @@
 package com.smartexplorer.core.domain.core;
 
 import com.google.maps.model.AddressComponent;
-import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.GeocodingResult;
 
 import java.util.LinkedHashMap;

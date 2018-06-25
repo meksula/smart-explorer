@@ -1,7 +1,6 @@
 package com.smartexplorer.core.cofiguration;
 
 import com.smartexplorer.core.domain.subject.client.ProxyClient;
-import com.smartexplorer.core.exception.ProxyClientException;
 import com.smartexplorer.core.repository.ClientRepository;
 import com.smartexplorer.core.repository.SpotMakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

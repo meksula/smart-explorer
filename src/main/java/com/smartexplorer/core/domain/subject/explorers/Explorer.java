@@ -1,6 +1,7 @@
 package com.smartexplorer.core.domain.subject.explorers;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.smartexplorer.core.domain.mail.MailReceiver;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Document(collection = "explorers")
-public class Explorer {
+public class Explorer implements MailReceiver {
 
     @Id
     private String explorerId;

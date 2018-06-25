@@ -1,5 +1,8 @@
 package com.smartexplorer.core.controller;
 
+import com.smartexplorer.core.domain.mail.MailSender;
+import com.smartexplorer.core.domain.mail.MailType;
+import com.smartexplorer.core.domain.mail.TemplateMailSender;
 import com.smartexplorer.core.domain.subject.explorers.Explorer;
 import com.smartexplorer.core.repository.ExplorerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,10 @@ public class ExplorerPersonalizationController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Explorer updateExplorer(@RequestBody Explorer explorer) {
+        MailSender mailSender = new TemplateMailSender();
+        mailSender.setAttachment(explorer);
+        mailSender.sendMail(MailType.EXPLORER_JOINED, explorer);
+
         return explorerRepository.save(explorer);
     }
 
