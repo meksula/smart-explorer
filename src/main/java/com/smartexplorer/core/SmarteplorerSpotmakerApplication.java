@@ -18,4 +18,5 @@ public class SmarteplorerSpotmakerApplication {
     public static void main(String[] args) {
         SpringApplication.run(SmarteplorerSpotmakerApplication.class, args);
     }
+
 }

@@ -15,7 +15,7 @@ public abstract class SpotCreator {
         boolean decission = validateForm(spotCreationForm);
 
         if (!decission)
-            throw new SpotCreationException("Form is not valid.");
+            throw new SpotCreationException("Form is not valid. You entered some incorrect values.");
 
         GeocodingResult[] geocodigResults = geolocation(spotCreationForm);
 

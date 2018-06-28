@@ -2,6 +2,9 @@
 
 RESTful web service that allows you to search for the historical places (museum etc).
 
+Project website:
+http://smart-explorer.pl/
+
 General features:
 -
 * Two user's types: SpotMaker and Explorer
@@ -23,7 +26,7 @@ Technologies used:
 
 Run:
 -
-App runs on port :8090
+App runs on port :8085
 
 1. Build project:    $ ./gradlew build
 2. Run app:          $ java -jar ~/build/libs/smart-explorer-core-1.0.0.jar
