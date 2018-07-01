@@ -17,7 +17,7 @@ public class SpotMakerValidatorDefault implements SpotMakerValidator {
     private boolean[] decissions;
 
     private final String USERNAME_PATTERN = "[0-9a-zA-Z]{6,25}";
-    private final String NAME_PATTERN = "[a-zA-Z]{2,25}";
+    private final String NAME_PATTERN = "[a-zA-Złóżźćłńęą]{2,25}";
     private final String EMAIL_PATTERN = ".+@{1}.+\\.[a-z]{2,}";
 
     @Override

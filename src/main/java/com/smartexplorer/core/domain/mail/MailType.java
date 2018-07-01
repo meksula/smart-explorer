@@ -3,6 +3,7 @@ package com.smartexplorer.core.domain.mail;
 import com.smartexplorer.core.domain.subject.explorers.Explorer;
 import com.smartexplorer.core.domain.subject.registration.Confirmation;
 import com.smartexplorer.core.domain.subject.spot.Spot;
+import com.smartexplorer.core.domain.subject.spot.stats.SummaryStatistics;
 import org.thymeleaf.context.Context;
 
 /**
@@ -86,6 +87,34 @@ public enum MailType {
         @Override
         public String getTemplate() {
             return "explorer_joined.html";
+        }
+    },
+
+    SPOT_STATISTIC_MAIL {
+        @Override
+        public Context setContext(Object attachment) {
+            Context context = new Context();
+            SummaryStatistics summaryStatistics = (SummaryStatistics) attachment;
+            context.setVariable("statistics", summaryStatistics);
+
+            return null;
+        }
+
+        @Override
+        public String getTemplate() {
+            return "spot_statistics";
+        }
+    },
+
+    SPOT_STATISTIC_MAIL_PDF {
+        @Override
+        public Context setContext(Object attachment) {
+            return null;
+        }
+
+        @Override
+        public String getTemplate() {
+            return null;
         }
     };
 

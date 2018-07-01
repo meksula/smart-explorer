@@ -40,7 +40,7 @@ public class CredentialsController {
         this.spotMakerRepository = spotMakerRepository;
     }
 
-    @PostMapping("/registration")
+    @PostMapping(value = "/registration")
     @ResponseStatus(HttpStatus.OK)
     public SpotMaker registerSpotMaker(@RequestBody SpotMakerForm spotMakerForm) {
         return spotMakerCreator.createSpotMaker(spotMakerForm);

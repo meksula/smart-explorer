@@ -2,6 +2,7 @@ package com.smartexplorer.core.domain.subject.spot.stats;
 
 import com.smartexplorer.core.domain.subject.spot.Spot;
 import com.smartexplorer.core.exception.SpotLocalizeException;
+import com.smartexplorer.core.exception.StatisticsCounterException;
 import com.smartexplorer.core.repository.SpotRepository;
 import com.smartexplorer.core.repository.SpotStatisticsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @Author Karol Meksuła
+ * @Author
+ * Karol Meksuła
  * 17-06-2018
  */
 
@@ -20,6 +22,8 @@ import java.util.List;
 public class StatisticProviderImpl implements StatisticsProvider {
     private SpotStatisticsRepository spotStatisticsRepository;
     private SpotRepository spotRepository;
+    private StatisticsExpander statisticsExpander;
+    private final String ERROR_MSG = "Cannot summarize statistics because spot ot found.\n[spotId] ";
 
     @Autowired
     public void setSpotStatisticsRepository(SpotStatisticsRepository spotStatisticsRepository) {
@@ -29,6 +33,11 @@ public class StatisticProviderImpl implements StatisticsProvider {
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
         this.spotRepository = spotRepository;
+    }
+
+    @Autowired
+    public void setStatisticsExpander(StatisticsExpander statisticsExpander) {
+        this.statisticsExpander = statisticsExpander;
     }
 
     @Override
@@ -72,6 +81,25 @@ public class StatisticProviderImpl implements StatisticsProvider {
         spotList.sort(Comparator.comparingDouble(SpotStatistics::getVisitNumber).reversed());
 
         return loadSpotList(spotList, amount);
+    }
+
+    @Override
+    public OverallStatistics serviceSummary() {
+        return statisticsExpander.overallStatistics();
+    }
+
+    @Override
+    public SummaryStatistics spotSummary(String spotId) {
+        SpotStatistics spotStatistics = spotStatisticsRepository.findBySpotId(spotId)
+                .orElseThrow(() -> new StatisticsCounterException
+                        (ERROR_MSG + spotId));
+        return statisticsExpander.expandStatistics(spotStatistics);
+    }
+
+    @Override
+    public SpotStatistics findSpotStatistics(String spotId) {
+        return spotStatisticsRepository.findBySpotId(spotId).orElseThrow(() -> new StatisticsCounterException
+                (ERROR_MSG + spotId));
     }
 
 }

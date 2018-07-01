@@ -20,17 +20,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/explorer/personalization")
 public class ExplorerPersonalizationController {
     private ExplorerRepository explorerRepository;
+    private MailSender mailSender;
 
     @Autowired
     public void setExplorerRepository(ExplorerRepository explorerRepository) {
         this.explorerRepository = explorerRepository;
     }
 
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
     @PreAuthorize("hasAuthority('PROXY')")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Explorer updateExplorer(@RequestBody Explorer explorer) {
-        MailSender mailSender = new TemplateMailSender();
         mailSender.setAttachment(explorer);
         mailSender.sendMail(MailType.EXPLORER_JOINED, explorer);
 

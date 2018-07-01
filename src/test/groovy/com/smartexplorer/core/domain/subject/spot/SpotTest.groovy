@@ -1,8 +1,7 @@
-package com.smartexplorer.core.domain.domain.subject.spot
+package com.smartexplorer.core.domain.subject.spot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.maps.model.GeocodingResult
-import com.smartexplorer.core.domain.subject.spot.Spot
 import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics
 import org.joda.time.LocalDateTime
 import spock.lang.Specification

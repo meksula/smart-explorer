@@ -59,4 +59,10 @@ public class ExceptionHandlerController {
         return "Something went wrong. Argument is invalid.";
     }
 
+    @ExceptionHandler(StatisticsCounterException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String statisticsCounterException() {
+        return new StatisticsCounterException().getMessage();
+    }
+
 }

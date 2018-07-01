@@ -16,4 +16,10 @@ public interface StatisticsProvider {
     List<Spot> findHighestRated(int amount);
 
     List<Spot> findMostVisited(int amount);
+
+    OverallStatistics serviceSummary();
+
+    SummaryStatistics spotSummary(String spotId);
+
+    SpotStatistics findSpotStatistics(String spotId);
 }

@@ -1,9 +1,6 @@
-package com.smartexplorer.core.domain.domain.mail
+package com.smartexplorer.core.domain.mail
 
 import com.smartexplorer.core.SmarteplorerSpotmakerApplication
-import com.smartexplorer.core.domain.mail.MailReceiver
-import com.smartexplorer.core.domain.mail.MailType
-import com.smartexplorer.core.domain.mail.TemplateMailSender
 import com.smartexplorer.core.domain.subject.registration.Confirmation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

@@ -1,4 +1,4 @@
-package com.smartexplorer.core.domain.domain.subject
+package com.smartexplorer.core.domain.subject
 
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker
 import spock.lang.Specification

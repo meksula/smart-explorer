@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface VisitHistoryRepository extends MongoRepository<Visit, String> {
     List<Visit> findAllByExplorerId(String explorerId);
+
+    List<Visit> findAllBySpotId(String spotId);
 }

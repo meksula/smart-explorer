@@ -1,9 +1,7 @@
-package com.smartexplorer.core.domain.domain.subject.spotmaker
+package com.smartexplorer.core.domain.subject.spotmaker
 
 import com.smartexplorer.core.SmarteplorerSpotmakerApplication
 import com.smartexplorer.core.domain.subject.registration.RegistrationConfirmation
-import com.smartexplorer.core.domain.subject.spotmaker.SpotMakerCreatorImpl
-import com.smartexplorer.core.domain.subject.spotmaker.SpotMakerForm
 import com.smartexplorer.core.repository.ConfirmationRepository
 import com.smartexplorer.core.repository.SpotMakerRepository
 import org.springframework.beans.factory.annotation.Autowired

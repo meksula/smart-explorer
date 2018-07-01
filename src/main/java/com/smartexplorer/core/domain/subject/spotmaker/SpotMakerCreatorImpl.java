@@ -41,13 +41,14 @@ public class SpotMakerCreatorImpl implements SpotMakerCreator {
 
     @Override
     public SpotMaker createSpotMaker(SpotMakerForm form) {
+        SpotMaker spotMaker;
         if (spotMakerValidator.validateSpotMaker(form)) {
-            SpotMaker spotMaker = buildSpotMaker(form);
+            spotMaker = buildSpotMaker(form);
             save(spotMaker);
             createConfirmationProcess(spotMaker);
-        }
+        } else throw new UserCreationException("Some values in your form are incorrect.");
 
-        return buildSpotMaker(form);
+        return spotMaker;
     }
 
     private SpotMaker buildSpotMaker(SpotMakerForm spotMakerForm) {

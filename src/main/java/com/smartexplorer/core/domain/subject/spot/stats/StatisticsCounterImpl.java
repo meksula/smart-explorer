@@ -67,7 +67,7 @@ public class StatisticsCounterImpl implements StatisticsCounter {
     public void opinionStatsUpdate(Opinion opinion) {
         String spotId = opinion.getSpotId();
         SpotStatistics spotStatistics = spotStatisticsRepository.findBySpotId(spotId)
-                .orElseThrow(() -> new StatisticsCounterException("Cannot count stats."));
+                .orElseThrow(() -> new StatisticsCounterException("Cannot count stats - spotId not recognized."));
 
         int ratesNumber = spotStatistics.getRatesNumber();
         double ratesTotal = spotStatistics.getRatesTotal();
