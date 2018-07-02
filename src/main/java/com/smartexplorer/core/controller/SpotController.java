@@ -1,5 +1,6 @@
 package com.smartexplorer.core.controller;
 
+import com.smartexplorer.core.controller.command.SpotRemoveCommand;
 import com.smartexplorer.core.controller.command.StatisticsMailCommand;
 import com.smartexplorer.core.domain.files.FileExchange;
 import com.smartexplorer.core.domain.subject.spot.Spot;
@@ -10,7 +11,6 @@ import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics;
 import com.smartexplorer.core.domain.subject.spot.stats.StatisticsProvider;
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
 import com.smartexplorer.core.repository.SpotMakerRepository;
-import com.sun.org.glassfish.external.statistics.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +34,7 @@ public class SpotController {
     private FileExchange fileExchange;
     private StatisticsProvider statisticsProvider;
     private StatisticsMailCommand statisticsMailCommand;
+    private SpotRemoveCommand spotRemoveCommand;
 
     @Autowired
     public void setSpotCreator(SpotCreator spotCreator) {
@@ -58,6 +59,11 @@ public class SpotController {
     @Autowired
     public void setStatisticsMailCommand(StatisticsMailCommand statisticsMailCommand) {
         this.statisticsMailCommand = statisticsMailCommand;
+    }
+
+    @Autowired
+    public void setSpotRemoveCommand(SpotRemoveCommand spotRemoveCommand) {
+        this.spotRemoveCommand = spotRemoveCommand;
     }
 
     @PreAuthorize("hasAuthority('SPOT_MAKER')")
@@ -102,6 +108,13 @@ public class SpotController {
     @ResponseStatus(HttpStatus.OK)
     public OverallStatistics getOverallStatistics() {
         return statisticsProvider.serviceSummary();
+    }
+
+    @PreAuthorize("hasAuthority('SPOT_MAKER')")
+    @DeleteMapping("/{spotId}")
+    public Spot removeSpot(@PathVariable("spotId") String spotId, Authentication authentication) {
+        String username = authentication.getName();
+        return spotRemoveCommand.removeSpot(username, spotId);
     }
 
 }

@@ -6,12 +6,122 @@
 </head>
 <body>
     <div>
-        <h4>Statistics of Spot with ID = <span th:text="${statistics.getSpotId()}"></span> </h4>
+        <h4>Statistics of Spot with ID = <span th:text="${statistics.getSpotStatistics().getId()}"></span> </h4>
         <h5>Date: <span th:text="${statistics.getSummaryDate()}"></span></h5>
-        <hr>
     </div>
 
+    <hr>
 
+    <div>
+        <h4>Basic statistics</h4>
+        <ul>
+            <li>SpotId: <span th:text="${statistics.getSpotStatistics().getSpotId()}"></span></li>
+            <li>Rates Average: <span th:text="${statistics.getSpotStatistics().getRatesAvg()}"></span></li>
+            <li>Total rates: <span th:text="${statistics.getSpotStatistics().getRatesTotal()}"></span></li>
+            <li>Number of rates: <span th:text="${statistics.getSpotStatistics().getRatesNumber()}"></span></li>
+            <li>All visits: <span th:text="${statistics.getSpotStatistics().getVisitNumber()}"></span></li>
+            <li>All searches: <span th:text="${statistics.getSpotStatistics().getSearches()}"></span></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div>
+        <h4>Extended statistics</h4>
+
+        <li>Number of visits by day of week</li>
+
+            <br>
+
+            <table style="border: 1px solid black;padding: 15px;">
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+                <tr>
+                    <td><span th:text="${statistics.visitInDay(1)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(2)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(3)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(4)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(5)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(6)}"></span></td>
+                    <td><span th:text="${statistics.visitInDay(7)}"></span></td>
+                </tr>
+            </table>
+
+            <br>
+
+        <table style="border: 1px solid black;padding: 15px;">
+            <tr>
+                <th>1:00</th>
+                <th>2:00</th>
+                <th>3:00</th>
+                <th>4:00</th>
+                <th>5:00</th>
+                <th>6:00</th>
+                <th>7:00</th>
+                <th>8:00</th>
+                <th>9:00</th>
+                <th>10:00</th>
+                <th>11:00</th>
+                <th>12:00</th>
+                <th>13:00</th>
+                <th>14:00</th>
+                <th>15:00</th>
+                <th>16:00</th>
+                <th>17:00</th>
+                <th>18:00</th>
+                <th>19:00</th>
+                <th>20:00</th>
+                <th>21:00</th>
+                <th>22:00</th>
+                <th>23:00</th>
+                <th>0:00</th>
+            </tr>
+            <tr>
+                <td><span th:text="${statistics.getVisitsByHours().get(0)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(1)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(2)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(3)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(4)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(5)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(6)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(7)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(8)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(9)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(10)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(11)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(12)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(13)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(14)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(15)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(16)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(17)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(18)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(19)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(20)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(21)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(22)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(23)}"></span></td>
+                <td><span th:text="${statistics.getVisitsByHours().get(24)}"></span></td>
+            </tr>
+        </table>
+
+        <ul>
+            <li>Visits in current month: <span th:text="${statistics.getVisitInLastMonth()}"></span></li>
+            <li>Visits in last week: <span th:text="${statistics.getVisitInLastWeek()}"></span></li>
+            <li>Visits in last week: <span th:text="${statistics.getVisitInLastWeek()}"></span></li>
+            <li>Average visits per days: <span th:text="${statistics.getAverageVisitsPerDays()}"></span></li>
+            <li>Average visits per weeks: <span th:text="${statistics.getAverageVisitsPerWeeks()}"></span></li>
+            <li>Average visits per months: <span th:text="${statistics.getAverageVisitsPerMonths()}"></span></li>
+            <li>All planned visits: <span th:text="${statistics.getVisitsPlanned()}"></span></li>
+        </ul>
+    </div>
 
 </body>
 </html>

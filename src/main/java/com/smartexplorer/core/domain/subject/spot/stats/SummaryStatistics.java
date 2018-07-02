@@ -32,4 +32,8 @@ public class SummaryStatistics {
         this.summaryDate = LocalDate.now().toString();
     }
 
+    public long visitInDay(int dayOfWeekIndex) {
+        return this.visitInDayOfWeek.get(DayOfWeek.of(dayOfWeekIndex));
+    }
+
 }

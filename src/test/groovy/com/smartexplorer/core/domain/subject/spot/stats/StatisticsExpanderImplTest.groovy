@@ -1,13 +1,19 @@
 package com.smartexplorer.core.domain.subject.spot.stats
 
+import com.google.maps.model.GeocodingResult
 import com.smartexplorer.core.domain.subject.explorers.Explorer
+import com.smartexplorer.core.domain.subject.explorers.Visit
+import com.smartexplorer.core.domain.subject.spot.Spot
 import com.smartexplorer.core.repository.ExplorerRepository
+import com.smartexplorer.core.repository.SpotRepository
 import com.smartexplorer.core.repository.SpotStatisticsRepository
-import org.joda.time.LocalDate
+import com.smartexplorer.core.repository.VisitHistoryRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
+import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
@@ -28,6 +34,12 @@ class StatisticsExpanderImplTest extends Specification {
     @Autowired
     private SpotStatisticsRepository spotStatisticsRepository
 
+    @Autowired
+    private VisitHistoryRepository visitHistoryRepository
+
+    @Autowired
+    private SpotRepository spotRepository
+
     private SpotStatistics spotStatistics
 
     private final SPOT_ID = "23d2md23md23dsc43g4"
@@ -47,6 +59,16 @@ class StatisticsExpanderImplTest extends Specification {
         spotStatistics.setRatesNumber(100)
         spotStatistics.setRatesTotal(450)
         spotStatistics.setVisitNumber(2145)
+
+        for (int i = 0; i < 10; i++) {
+            Visit visit = new Visit(SPOT_ID, SPOT_ID)
+            visit.initDate()
+            visitHistoryRepository.save(visit)
+        }
+        Spot spot = new Spot(SPOT_ID, LocalDate.now().toString(), new GeocodingResult[1])
+        spot.id = SPOT_ID
+        spotRepository.save(spot)
+
     }
 
     def 'injection test'() {
@@ -70,7 +92,14 @@ class StatisticsExpanderImplTest extends Specification {
         then:
         expanded.getSpotStatistics().getId() == SPOT_ID
         expanded.getSummaryDate() != null
-        expanded.getVisitsByHours() != null
+        expanded.getVisitsByHours().get(12) == 0
+        expanded.getVisitsByHours().get(org.joda.time.LocalDateTime.now().getHourOfDay()) == 10
+
+        DayOfWeek day = LocalDateTime.now().getDayOfWeek()
+        expanded.getVisitInDayOfWeek().get(day) == 10
+        expanded.getVisitInLastMonth() == 10
+        expanded.getVisitInLastWeek() == 10
+        expanded.getAverageVisitsPerDays() == 0
     }
 
     def 'joda date parse test'() {

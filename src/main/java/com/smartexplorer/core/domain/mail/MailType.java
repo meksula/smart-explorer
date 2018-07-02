@@ -97,7 +97,7 @@ public enum MailType {
             SummaryStatistics summaryStatistics = (SummaryStatistics) attachment;
             context.setVariable("statistics", summaryStatistics);
 
-            return null;
+            return context;
         }
 
         @Override
