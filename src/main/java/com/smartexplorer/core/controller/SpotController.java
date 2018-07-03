@@ -6,14 +6,20 @@ import com.smartexplorer.core.domain.files.FileExchange;
 import com.smartexplorer.core.domain.subject.spot.Spot;
 import com.smartexplorer.core.domain.subject.spot.SpotCreationForm;
 import com.smartexplorer.core.domain.subject.spot.SpotCreator;
+import com.smartexplorer.core.domain.subject.spot.information.SpotInformation;
+import com.smartexplorer.core.domain.subject.spot.information.SpotInformationManager;
 import com.smartexplorer.core.domain.subject.spot.stats.OverallStatistics;
 import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics;
 import com.smartexplorer.core.domain.subject.spot.stats.StatisticsProvider;
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
+import com.smartexplorer.core.domain.subject.spotmaker.auth.SpotMakerAuthHelper;
+import com.smartexplorer.core.exception.SpotLocalizeException;
+import com.smartexplorer.core.repository.SpotInformationRepository;
 import com.smartexplorer.core.repository.SpotMakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +41,10 @@ public class SpotController {
     private StatisticsProvider statisticsProvider;
     private StatisticsMailCommand statisticsMailCommand;
     private SpotRemoveCommand spotRemoveCommand;
+    private SpotInformationRepository spotInformationRepository;
+    private SpotInformationManager spotInformationManager;
+    private SpotMakerAuthHelper spotMakerAuthHelper;
+    private final String MSG = "You have no rights to modify spot with id: ";
 
     @Autowired
     public void setSpotCreator(SpotCreator spotCreator) {
@@ -66,6 +76,21 @@ public class SpotController {
         this.spotRemoveCommand = spotRemoveCommand;
     }
 
+    @Autowired
+    public void setSpotInformationRepository(SpotInformationRepository spotInformationRepository) {
+        this.spotInformationRepository = spotInformationRepository;
+    }
+
+    @Autowired
+    public void setSpotInformationManager(SpotInformationManager spotInformationManager) {
+        this.spotInformationManager = spotInformationManager;
+    }
+
+    @Autowired
+    public void setSpotMakerAuthHelper(SpotMakerAuthHelper spotMakerAuthHelper) {
+        this.spotMakerAuthHelper = spotMakerAuthHelper;
+    }
+
     @PreAuthorize("hasAuthority('SPOT_MAKER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -81,8 +106,14 @@ public class SpotController {
     @PreAuthorize("hasAuthority('SPOT_MAKER')")
     @PostMapping(value = "/picture/{spotId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String sendPhoto(@PathVariable("spotId") String spotId, @RequestParam("file") MultipartFile file) {
-        return fileExchange.uploadPicture(file, spotId);
+    public String sendPhoto(@PathVariable("spotId") String spotId, @RequestParam("file") MultipartFile file,
+                            Authentication authentication) {
+
+        if (spotMakerAuthHelper.hasSpotRights(spotId, authentication.getName())) {
+            return fileExchange.uploadPicture(file, spotId);
+        }
+
+        else throw new AuthorizationServiceException(MSG + spotId);
     }
 
     @GetMapping(value = "/picture/{spotId}", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -112,9 +143,28 @@ public class SpotController {
 
     @PreAuthorize("hasAuthority('SPOT_MAKER')")
     @DeleteMapping("/{spotId}")
+    @ResponseStatus(HttpStatus.OK)
     public Spot removeSpot(@PathVariable("spotId") String spotId, Authentication authentication) {
         String username = authentication.getName();
         return spotRemoveCommand.removeSpot(username, spotId);
+    }
+
+    @GetMapping("/info/{spotId}")
+    @ResponseStatus(HttpStatus.OK)
+    public SpotInformation getSpotInformation(@PathVariable("spotId") String spotId) {
+        return spotInformationRepository.findBySpotId(spotId)
+                .orElseThrow(() -> new SpotLocalizeException("Cannot find information about spot with id: " + spotId));
+    }
+
+    @PreAuthorize("hasAuthority('SPOT_MAKER')")
+    @PutMapping("/info")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SpotInformation modifySpotInformation(@RequestBody SpotInformation spotInformation, Authentication authentication) {
+        if (spotMakerAuthHelper.hasSpotRights(spotInformation.getSpotId(), authentication.getName())) {
+            return spotInformationManager.modifySpotInformation(spotInformation);
+        }
+
+        else throw new AuthorizationServiceException(MSG + spotInformation.getSpotId());
     }
 
 }

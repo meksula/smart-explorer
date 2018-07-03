@@ -23,6 +23,7 @@ public abstract class SpotCreator {
             Spot spot = buildSpot(spotCreationForm, geocodigResults);
             saveSpot(spot);
             createStatsEntity(spot.getId());
+            createSpotInfoEntity(spot.getId());
             sendEmail(spot);
             return spot;
         } catch (RuntimeException re) {
@@ -40,6 +41,8 @@ public abstract class SpotCreator {
     protected abstract void saveSpot(Spot spot);
 
     protected abstract void createStatsEntity(String spotId);
+
+    protected abstract void createSpotInfoEntity(String spotId);
 
     protected abstract void sendEmail(Spot spot);
 

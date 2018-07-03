@@ -6,6 +6,7 @@ import com.smartexplorer.core.domain.geolocation.BasicAddress;
 import com.smartexplorer.core.domain.geolocation.Geolocation;
 import com.smartexplorer.core.domain.mail.MailSender;
 import com.smartexplorer.core.domain.mail.MailType;
+import com.smartexplorer.core.domain.subject.spot.information.SpotInformationManager;
 import com.smartexplorer.core.domain.subject.spot.stats.SpotStatistics;
 import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker;
 import com.smartexplorer.core.exception.SpotCreationException;
@@ -33,6 +34,7 @@ public class SpotCreatorImpl extends SpotCreator {
     private Geolocation geolocation;
     private MailSender mailSender;
     private SpotMakerRepository spotMakerRepository;
+    private SpotInformationManager spotInformationManager;
 
     @Autowired
     public void setSpotRepository(SpotRepository spotRepository) {
@@ -57,6 +59,11 @@ public class SpotCreatorImpl extends SpotCreator {
     @Autowired
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
+    }
+
+    @Autowired
+    public void setSpotInformationManager(SpotInformationManager spotInformationManager) {
+        this.spotInformationManager = spotInformationManager;
     }
 
     @Override
@@ -139,6 +146,11 @@ public class SpotCreatorImpl extends SpotCreator {
     protected void createStatsEntity(String spotId) {
         SpotStatistics spotStatistics = new SpotStatistics(spotId);
         spotStatisticsRepository.save(spotStatistics);
+    }
+
+    @Override
+    protected void createSpotInfoEntity(String spoId) {
+        spotInformationManager.createEmptyInfo(spoId);
     }
 
     @Override

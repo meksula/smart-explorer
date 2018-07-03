@@ -4,6 +4,7 @@ import com.google.maps.model.LatLng;
 import com.smartexplorer.core.domain.core.SpotExploration;
 import com.smartexplorer.core.domain.subject.explorers.Visit;
 import com.smartexplorer.core.domain.subject.spot.Spot;
+import com.smartexplorer.core.domain.subject.spot.information.SpotInformationManager;
 import com.smartexplorer.core.domain.subject.spot.stats.SpotSearch;
 import com.smartexplorer.core.exception.SpotLocalizeException;
 import com.smartexplorer.core.repository.SpotStatisticsRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ import java.util.List;
 public class SpotExplorationController {
     private SpotExploration spotExploration;
     private SpotStatisticsRepository spotStatisticsRepository;
+    private SpotInformationManager spotInformationManager;
 
     @Autowired
     public void setSpotExploration(SpotExploration spotExploration) {
@@ -106,6 +109,14 @@ public class SpotExplorationController {
             return 0;
 
         return avg;
+    }
+
+    //TODO dodać do dokumentacji
+
+    @GetMapping("/{spotId}/visitable")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean isSpotVisitableNow(@PathVariable("spotId") String spotId) {
+        return spotInformationManager.isSpotVisitableNow(spotId);
     }
 
 }
