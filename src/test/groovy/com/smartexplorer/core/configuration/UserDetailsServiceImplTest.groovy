@@ -50,7 +50,7 @@ class UserDetailsServiceImplTest extends Specification {
     def 'PROXY API access test'() {
         expect:
         detailsService.loadUserByUsername("PROXY_CLIENT_3d2dc3df22")
-        clientRepository.findAll().size() == 1
+        clientRepository.findAll().size() == 2
     }
 
     def 'encode password'() {

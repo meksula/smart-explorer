@@ -93,12 +93,12 @@ class StatisticsExpanderImplTest extends Specification {
         expanded.getSpotStatistics().getId() == SPOT_ID
         expanded.getSummaryDate() != null
         expanded.getVisitsByHours().get(12) == 0
-        expanded.getVisitsByHours().get(org.joda.time.LocalDateTime.now().getHourOfDay()) == 10
+        expanded.getVisitsByHours().get(org.joda.time.LocalDateTime.now().getHourOfDay()) == 30
 
         DayOfWeek day = LocalDateTime.now().getDayOfWeek()
-        expanded.getVisitInDayOfWeek().get(day) == 10
-        expanded.getVisitInLastMonth() == 10
-        expanded.getVisitInLastWeek() == 10
+        expanded.getVisitInDayOfWeek().get(day) == 30
+        expanded.getVisitInLastMonth() == 30
+        expanded.getVisitInLastWeek() == 30
         expanded.getAverageVisitsPerDays() == 0
     }
 

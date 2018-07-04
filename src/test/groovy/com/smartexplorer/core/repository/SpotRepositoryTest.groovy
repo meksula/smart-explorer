@@ -36,7 +36,6 @@ class SpotRepositoryTest extends Specification {
         spot = new Spot(spotMakerId, creationDate, geocodingResult)
         spot.setName(name)
         spot.setDescription(description)
-        spot.setSpotStatistics(spotStatistics)
         spot.setSearchEnable(true)
     }
 

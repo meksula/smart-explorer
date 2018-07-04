@@ -39,6 +39,7 @@ class SpotInformationCreatorImplTest extends Specification {
     def 'modify spotInformation test'() {
         setup:
         def updated = buildFakeSpotInfo()
+        spotInformationRepository.save(updated)
 
         when:
         spotInformationManager.modifySpotInformation(updated)
@@ -55,7 +56,8 @@ class SpotInformationCreatorImplTest extends Specification {
 
     def 'is visitable now? test'() {
         setup:
-        spotInformationManager.modifySpotInformation(buildFakeSpotInfo())
+        def fakeSpot = spotInformationRepository.save(buildFakeSpotInfo())
+        spotInformationManager.modifySpotInformation(fakeSpot)
 
         expect:
         spotInformationManager.isSpotVisitableNow(SPOT_ID)

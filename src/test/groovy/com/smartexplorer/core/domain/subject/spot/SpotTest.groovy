@@ -25,7 +25,6 @@ class SpotTest extends Specification {
         def spot = new Spot(spotMakerId, creationDate, geocodingResult)
         spot.setName(name)
         spot.setDescription(description)
-        spot.setSpotStatistics(spotStatistics)
         spot.setSearchEnable(true)
 
         and:

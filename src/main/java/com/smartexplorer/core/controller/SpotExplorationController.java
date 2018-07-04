@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
@@ -37,6 +36,11 @@ public class SpotExplorationController {
     @Autowired
     public void setSpotStatisticsRepository(SpotStatisticsRepository spotStatisticsRepository) {
         this.spotStatisticsRepository = spotStatisticsRepository;
+    }
+
+    @Autowired
+    public void setSpotInformationManager(SpotInformationManager spotInformationManager) {
+        this.spotInformationManager = spotInformationManager;
     }
 
     @SpotSearch
@@ -110,8 +114,6 @@ public class SpotExplorationController {
 
         return avg;
     }
-
-    //TODO dodać do dokumentacji
 
     @GetMapping("/{spotId}/visitable")
     @ResponseStatus(HttpStatus.OK)

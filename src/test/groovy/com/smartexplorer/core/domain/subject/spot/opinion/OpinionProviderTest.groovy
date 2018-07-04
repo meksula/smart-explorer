@@ -1,8 +1,6 @@
-package groovy.com.smartexplorer.core.domain.subject.spot.opinion
+package com.smartexplorer.core.domain.subject.spot.opinion
 
 import com.smartexplorer.core.SmarteplorerSpotmakerApplication
-import com.smartexplorer.core.domain.subject.spot.opinion.Opinion
-import com.smartexplorer.core.domain.subject.spot.opinion.OpinionsProvider
 import com.smartexplorer.core.repository.SpotOpinionsRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

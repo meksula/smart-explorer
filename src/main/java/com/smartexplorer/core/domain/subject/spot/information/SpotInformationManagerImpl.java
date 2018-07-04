@@ -40,6 +40,7 @@ public class SpotInformationManagerImpl implements SpotInformationManager {
 
     @Override
     public SpotInformation modifySpotInformation(SpotInformation spotInformation) {
+        spotInformationRepository.delete(spotInformation);
         return spotInformationRepository.save(spotInformation);
     }
 
@@ -52,11 +53,15 @@ public class SpotInformationManagerImpl implements SpotInformationManager {
         DayOfWeek dayOfWeek = now.getDayOfWeek();
         int hour = now.getHour();
 
-        VisitDay visitDay = spotInformation.getVisitDaysInWeek().get(dayOfWeek);
+        try {
+            VisitDay visitDay = spotInformation.getVisitDaysInWeek().get(dayOfWeek);
 
-        for (int visitHour : visitDay.getHours()) {
-            if (visitHour == hour)
-                return true;
+            for (int visitHour : visitDay.getHours()) {
+                if (visitHour == hour)
+                    return true;
+            }
+        } catch (NullPointerException npo) {
+            return false;
         }
 
         return false;

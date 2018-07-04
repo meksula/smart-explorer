@@ -1,6 +1,8 @@
 package com.smartexplorer.core.domain.subject.spot
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.smartexplorer.core.domain.subject.spotmaker.SpotMaker
+import com.smartexplorer.core.repository.SpotMakerRepository
 import com.smartexplorer.core.repository.SpotRepository
 import com.smartexplorer.core.repository.SpotStatisticsRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,8 +37,17 @@ class SpotCreatorImplTest extends Specification {
     @Autowired
     private SpotCreator spotCreator
 
+    @Autowired
+    private SpotMakerRepository spotMakerRepository
+
     void setup() {
         form = new SpotCreationForm(NAME, DESCRIPTION, SEARCH_ENABLE, CITY, STREET, BUILDING_NUMBER)
+        form.spotMakerId = SPOT_MAKER_ID
+
+        def spotMaker = new SpotMaker()
+        spotMaker.spotMakerId = SPOT_MAKER_ID
+        spotMaker.setEmail("karol.meksula@onet.pl")
+        spotMakerRepository.save(spotMaker)
     }
 
     def 'instantiate test'() {
